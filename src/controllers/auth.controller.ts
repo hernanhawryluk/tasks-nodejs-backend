@@ -3,6 +3,7 @@ import User from "../models/user.model";
 import bcrypt from "bcryptjs";
 import { createAccessToken } from "../libs/jwt";
 import { Token } from "middlewares/auth.middleware";
+import jwt from "jsonwebtoken";
 
 interface ProfileRequest extends Request {
   user: Token;
@@ -85,4 +86,27 @@ export const profile = async (req: ProfileRequest, res: Response) => {
   });
 
   res.send("Profile");
+};
+
+export const verifyToken = async (req: Request, res: Response) => {
+  const { token } = req.cookies;
+
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+  jwt.verify(
+    token,
+    process.env.JWT_TOKEN as string,
+    async (err: Error, user: Token) => {
+      if (err) return res.status(401).json({ message: "Unauthorized" });
+
+      const userFound = await User.findById(user.id);
+      if (!userFound) return res.status(401).json({ message: "Unauthorized" });
+
+      return res.json({
+        id: userFound._id,
+        username: userFound.username,
+        email: userFound.email,
+      });
+    }
+  );
 };
