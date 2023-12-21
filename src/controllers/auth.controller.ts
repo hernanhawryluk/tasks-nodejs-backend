@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/user.model";
 import bcrypt from "bcryptjs";
 import { createAccessToken } from "../libs/jwt";
-import { Token } from "middlewares/auth.middlewares";
+import { Token } from "middlewares/auth.middleware";
 
 interface ProfileRequest extends Request {
   user: Token;

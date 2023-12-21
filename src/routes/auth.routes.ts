@@ -5,13 +5,15 @@ import {
   logout,
   profile,
 } from "../controllers/auth.controller";
-import authenticate from "../middlewares/auth.middlewares";
+import authenticate from "../middlewares/auth.middleware";
+import { validateSchema } from "../middlewares/validator.middleware";
+import { loginSchema, registerSchema } from "../schemas/auth.schema";
 
 const router = Router();
 
-router.post("/register", register);
+router.post("/register", validateSchema(registerSchema), register);
 
-router.post("/login", login);
+router.post("/login", validateSchema(loginSchema), login);
 
 router.post("/logout", logout);
 
