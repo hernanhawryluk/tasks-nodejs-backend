@@ -8,6 +8,6 @@ export const validateSchema =
     } catch (error) {
       return res
         .status(400)
-        .json({ error: error.errors.map((error: Error) => error.message) });
+        .json({ message: error.errors.map((error: Error) => error.message) });
     }
   };
