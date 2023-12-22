@@ -20,6 +20,6 @@ router.post("/logout", logout);
 
 router.get("/profile", authenticate, profile);
 
-router.get("verify-token", verifyToken);
+router.get("/verify-token", verifyToken);
 
 export default router;

@@ -84,8 +84,6 @@ export const profile = async (req: ProfileRequest, res: Response) => {
     createdAt: userFound.createdAt,
     updatedAt: userFound.updatedAt,
   });
-
-  res.send("Profile");
 };
 
 export const verifyToken = async (req: Request, res: Response) => {
