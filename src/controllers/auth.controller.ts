@@ -68,43 +68,56 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  res.cookie("token", "", { expires: new Date(0) });
-  return res.sendStatus(200);
+  try {
+    res.cookie("token", "", { expires: new Date(0) });
+    return res.sendStatus(200);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 export const profile = async (req: ProfileRequest, res: Response) => {
-  const userFound = await User.findById(req.user.id);
+  try {
+    const userFound = await User.findById(req.user.id);
 
-  if (!userFound) return res.status(400).json({ message: "User not found" });
+    if (!userFound) return res.status(400).json({ message: "User not found" });
 
-  return res.json({
-    id: userFound._id,
-    username: userFound.username,
-    email: userFound.email,
-    createdAt: userFound.createdAt,
-    updatedAt: userFound.updatedAt,
-  });
+    return res.json({
+      id: userFound._id,
+      username: userFound.username,
+      email: userFound.email,
+      createdAt: userFound.createdAt,
+      updatedAt: userFound.updatedAt,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 export const verifyToken = async (req: Request, res: Response) => {
-  const { token } = req.cookies;
+  try {
+    const { token } = req.cookies;
 
-  if (!token) return res.status(401).json({ message: "Unauthorized" });
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
 
-  jwt.verify(
-    token,
-    process.env.JWT_TOKEN as string,
-    async (err: Error, user: Token) => {
-      if (err) return res.status(401).json({ message: "Unauthorized" });
+    jwt.verify(
+      token,
+      process.env.JWT_TOKEN as string,
+      async (err: Error, user: Token) => {
+        if (err) return res.status(401).json({ message: "Unauthorized" });
 
-      const userFound = await User.findById(user.id);
-      if (!userFound) return res.status(401).json({ message: "Unauthorized" });
+        const userFound = await User.findById(user.id);
+        if (!userFound)
+          return res.status(401).json({ message: "Unauthorized" });
 
-      return res.json({
-        id: userFound._id,
-        username: userFound.username,
-        email: userFound.email,
-      });
-    }
-  );
+        return res.json({
+          id: userFound._id,
+          username: userFound.username,
+          email: userFound.email,
+        });
+      }
+    );
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
