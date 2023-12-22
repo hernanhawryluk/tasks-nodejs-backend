@@ -20,7 +20,9 @@ router.post(
   validateSchema(createTaskSchema),
   createTask
 );
+
 router.delete("/tasks/:id", authenticate, deleteTask);
+
 router.put(
   "/tasks/:id",
   authenticate,
