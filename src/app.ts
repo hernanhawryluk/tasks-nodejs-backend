@@ -7,6 +7,11 @@ import authRoutes from "./routes/auth.routes";
 import tasksRoutes from "./routes/tasks.routes";
 import notesRoutes from "./routes/notes.routes";
 
+// ========================= only for Vercel
+import { connectDB } from "./db";
+connectDB();
+// ========================= only for Vercel
+
 const app = express();
 
 app.use(
