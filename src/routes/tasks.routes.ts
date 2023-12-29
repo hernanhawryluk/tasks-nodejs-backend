@@ -14,6 +14,7 @@ const router = Router();
 
 router.get("/tasks", authenticate, getTasks);
 router.get("/tasks/:id", authenticate, getTask);
+
 router.post(
   "/tasks",
   authenticate,

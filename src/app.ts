@@ -5,6 +5,7 @@ import cors from "cors";
 
 import authRoutes from "./routes/auth.routes";
 import tasksRoutes from "./routes/tasks.routes";
+import notesRoutes from "./routes/notes.routes";
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use(cookieParser());
 
 app.use("/api", authRoutes);
 app.use("/api", tasksRoutes);
+app.use("/api", notesRoutes);
 
 export default app;
