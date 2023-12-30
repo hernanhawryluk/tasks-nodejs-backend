@@ -30,7 +30,6 @@ export const register = async (req: Request, res: Response) => {
 
     res.cookie("token", token, {
       expires: new Date(Date.now() + 2592000000),
-      httpOnly: false,
       sameSite: "none",
       secure: true,
     });
