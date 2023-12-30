@@ -29,6 +29,7 @@ export const register = async (req: Request, res: Response) => {
     const token = await createAccessToken({ id: userSaved._id.toString() });
 
     res.cookie("token", token, {
+      expires: new Date(Date.now() + 2592000000),
       httpOnly: false,
       sameSite: "none",
       secure: true,
@@ -59,6 +60,7 @@ export const login = async (req: Request, res: Response) => {
     const token = await createAccessToken({ id: userFound._id.toString() });
 
     res.cookie("token", token, {
+      expires: new Date(Date.now() + 2592000000),
       httpOnly: false,
       sameSite: "none",
       secure: true,
