@@ -31,8 +31,8 @@ export const register = async (req: Request, res: Response) => {
     res.cookie("token", token, {
       httpOnly: true,
       sameSite: "none",
+      path: "/",
       secure: true,
-      domain: "tasks-react-frontend.vercel.app",
     });
     res.json({
       id: userSaved._id,
@@ -62,6 +62,7 @@ export const login = async (req: Request, res: Response) => {
     res.cookie("token", token, {
       httpOnly: true,
       sameSite: "none",
+      path: "/",
       secure: true,
     });
     res.json({
