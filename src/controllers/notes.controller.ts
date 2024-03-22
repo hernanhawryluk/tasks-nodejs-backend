@@ -11,7 +11,7 @@ type CustomRequest = Request & {
 export const getNotes = async (req: CustomRequest, res: Response) => {
   try {
     const notes = await Note.findOne({ user: req.user.id }).populate("user");
-    res.json(notes);
+    res.status(200).json(notes);
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
   }
@@ -24,10 +24,7 @@ export const updateNotes = async (req: CustomRequest, res: Response) => {
       notes: !notes ? "" : notes,
       user: req.user.id,
     };
-
-    console.log(newNotes);
     const alreadyHaveNotes = await Note.findOne({ user: req.user.id });
-    console.log(alreadyHaveNotes);
     if (!alreadyHaveNotes) {
       const savedNotes = await Note.create(newNotes);
       res.json(savedNotes);
@@ -42,7 +39,6 @@ export const updateNotes = async (req: CustomRequest, res: Response) => {
       res.json(savedNotes);
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Something went wrong" });
   }
 };
